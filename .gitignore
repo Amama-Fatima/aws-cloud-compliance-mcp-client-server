@@ -60,3 +60,5 @@ claude_desktop_config.json
 
 application-local.properties
 application-dev.properties
+
+mcp-client/venv
