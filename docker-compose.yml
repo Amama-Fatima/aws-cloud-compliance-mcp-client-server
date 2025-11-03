@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mcp-server:
-    build: .
+    build: ./mcp-server
     container_name: cloud-compliance-mcp
     environment:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
