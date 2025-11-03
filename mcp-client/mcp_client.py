@@ -1,3 +1,5 @@
+# mcp-client/mcp_client.py
+
 import asyncio
 import json
 import subprocess
@@ -233,7 +235,7 @@ async def main():
         print(f"❌ Error checking Docker: {e}")
         return
     
-    client = CloudComplianceClient(model_name="llama3.1:8b")
+    client = CloudComplianceClient(model_name="llama3.2:3b")
     await client.chat_loop()
 
 
