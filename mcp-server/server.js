@@ -7,11 +7,11 @@ const PORT = process.env.PORT || 10000;
 
 // Configuration constants
 const CONFIG = {
-  REQUEST_TIMEOUT: parseInt(process.env.MCP_TOOL_TIMEOUT) || 180000, // 3 minutes
-  SESSION_IDLE_TIMEOUT: parseInt(process.env.SESSION_IDLE_TIMEOUT) || 1800000, // 30 minutes
-  SESSION_MAX_LIFETIME: parseInt(process.env.SESSION_MAX_LIFETIME) || 3600000, // 1 hour
+  REQUEST_TIMEOUT: 300000, // 5 minutes
+  SESSION_IDLE_TIMEOUT: 1800000,
+  SESSION_MAX_LIFETIME: 3600000,
   KEEPALIVE_INTERVAL: 15000,
-  INITIALIZATION_TIMEOUT: 30000,
+  INITIALIZATION_TIMEOUT: 90000, // 90 seconds for cold starts
   SESSION_CHECK_INTERVAL: 60000,
 };
 
@@ -54,6 +54,16 @@ function createMcpProcess() {
       AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
       AWS_REGION: process.env.AWS_REGION || "ap-south-1",
     },
+  });
+
+  console.log("Java process spawned with PID:", mcpProcess.pid);
+
+  mcpProcess.stdout.on("data", (data) => {
+    console.log("Java STDOUT:", data.toString());
+  });
+
+  mcpProcess.stderr.on("data", (data) => {
+    console.error("Java STDERR:", data.toString().trim());
   });
 
   mcpProcess.on("error", (error) => {
