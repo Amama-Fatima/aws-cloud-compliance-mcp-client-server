@@ -9,6 +9,7 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+mcp-server/node_modules/
 *.class
 *.log
 *.jar

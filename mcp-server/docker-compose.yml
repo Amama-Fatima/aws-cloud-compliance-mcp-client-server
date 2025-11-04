@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  mcp-server:
+    build: .
+    container_name: cloud-compliance-mcp-remote-server
+    ports:
+      - "10000:10000"
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-ap-south-1}
+      - PORT=10000
+      - MCP_TOOL_TIMEOUT=180000
+      - SESSION_IDLE_TIMEOUT=1800000
+      - SESSION_MAX_LIFETIME=3600000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:10000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
